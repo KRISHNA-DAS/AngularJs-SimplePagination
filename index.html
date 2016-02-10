@@ -1,0 +1,55 @@
+<html>
+<head>
+    <title>PAGINATION</title>
+    <script src="angular.min.js"></script>
+    <script src="myapp.js"></script>
+    </head>
+    <body ng-app="myApp" ng-controller="myController">
+	
+	<div align="center">
+	<label><h1>EMPLOYEE DETAILS</h1></label>
+	<label>[a simple angularjs pagination example]<label></div>
+	<hr/>
+	<div align="center">
+	<b>ITEMS PER PAGE: </b><select ng-model="itemsPerPage" ng-change="itemsPerPageChange()">
+	<option ng-repeat="num in itemsPerPageList" value="{{num}}">{{num}}</option>
+	</select>&nbsp;&nbsp;
+        <label><b>  SELECT PAGE LIST LENGTH:</b></label><input type="number" ng-model="pageListLength" ng-change="pageListLengthChange()"/>
+
+    </div>
+    
+    <br/>
+   <table border="0" align="center" cellspacing = "0" cellpadding = "5">
+        <tr>
+            <td><label><b>SELECT PAGE:  </b></label></td>
+            <td><button ng-click="firstPage()">&lt&lt</button></td>
+            <td><button ng-click="previousPage()">&lt</button></td>
+            
+            <td ng-repeat="n in paginationList"><button ng-click="toPage(n)" ng-style="currentPage == n ? {'background-color':'white','font-size': '18px'} : {'background-color':'lightgrey'}">{{n}}</button></td>
+          
+            <!-- repeating the page numbers in the pagination list and on click, toPage() is called.
+            ng-style, for applying a different style for the selected page number, in the pagelist ie, if currentpage equals n then the different style is applied-->
+            
+            <td><button ng-click="nextPage()">&gt</button></td>
+            <td><button ng-click="lastPage()">&gt&gt</button></td>
+            </tr>
+    </table>
+    
+	<br/>
+   
+        <table border="1" align="center" cellspacing = "0" cellpadding = "5">
+	<tr ng-repeat="em in slicedData">
+	
+		<td>{{em.regNo}}</td>
+		<td>{{em.name}}</td>
+        <td>{{em.age}}</td>
+		<td>{{em.gender}}</td>
+		<td>{{em.phone}}</td>
+		<td>{{em.email}}</td>
+		<td>{{em.address}}</td>
+		<td>{{em.joined}}</td>
+        </tr>
+     </table>
+ 
+    </body>
+</html>
