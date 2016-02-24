@@ -11,7 +11,7 @@ myApp.controller('myController', ['$scope', '$http', function ($scope, $http) {
 
     $scope.pageListLengthChange = function () {
             getPaginationList();
-        } //change the length of page list and get new paging list array
+        }; //change the length of page list and get new paging list array
 
     $scope.itemsPerPageChange = function () {
         totalPages = Math.ceil(totalItems / $scope.itemsPerPage);
@@ -28,7 +28,7 @@ myApp.controller('myController', ['$scope', '$http', function ($scope, $http) {
         $scope.currentPage = totalPages;
         getPaginationList();
         sliceData();
-    }
+    };
     $scope.nextPage = function () {
         if ($scope.currentPage < totalPages) {
             $scope.currentPage += 1;
@@ -38,7 +38,7 @@ myApp.controller('myController', ['$scope', '$http', function ($scope, $http) {
         /*else {
                    $scope.currentPage = totalPages;
                }*/
-    }
+    };
     $scope.previousPage = function () {
         if ($scope.currentPage > 1) {
             $scope.currentPage -= 1;
@@ -48,16 +48,16 @@ myApp.controller('myController', ['$scope', '$http', function ($scope, $http) {
         /*else {
                    $scope.currentPage = 1;
                }*/
-    }
+    };
     $scope.toPage = function (selected) {
         $scope.currentPage = parseInt(selected);
         sliceData();
-    }
+    };
     $scope.firstPage = function (selected) {
         $scope.currentPage = 1;
         getPaginationList();
         sliceData();
-    }
+    };
 /*---------------------------------------------------------------------*/
     
     var empData = []; //the whole json will come here
@@ -66,7 +66,7 @@ myApp.controller('myController', ['$scope', '$http', function ($scope, $http) {
 
     vm.init = function () {
             vm.getEmpData();
-        } //get whole json on controller loading
+        }; //get whole json on controller loading
 
     vm.getEmpData = function () {
             $http.get("Employee_data.json").then(function (response) {
@@ -76,28 +76,29 @@ myApp.controller('myController', ['$scope', '$http', function ($scope, $http) {
                 getPaginationList();
                 sliceData();
             });
-        } //For loading the whole data & inside of it, that gets sliced & page list created also
+        };//For loading the whole data & inside of it, that gets sliced & page list created also
 
     var sliceData = function () {
             var sliceStart = (parseInt($scope.currentPage - 1) * parseInt($scope.itemsPerPage));
             var sliceEnd = sliceStart + parseInt($scope.itemsPerPage);
             $scope.slicedData = empData.slice(sliceStart, sliceEnd);
-        } //This function will slice out the large data into small sets according to the selected page number and number of items per page value
+        };//This function will slice out the large data into small sets according to the selected page number and number of items per page value
 
     var getPaginationList = function () {
         $scope.paginationList = [];
+         var startVal = 0;
         if ($scope.currentPage <= $scope.pageListLength) {
 
-            var startVal = 1;
+           startVal = 1;
             generatePaginationList(startVal);
         } else {
-            if (($scope.currentPage % $scope.pageListLength) == 0) {
+            if ((parseInt($scope.currentPage) % parseInt($scope.pageListLength) === 0)) {
 
-                var startVal = ($scope.currentPage - ($scope.pageListLength - 1));
+              startVal = ($scope.currentPage - ($scope.pageListLength - 1));
                 generatePaginationList(startVal);
             } else {
 
-                var startVal = (Math.floor($scope.currentPage / $scope.pageListLength) * $scope.pageListLength) + 1;
+             startVal = (Math.floor($scope.currentPage / $scope.pageListLength) * $scope.pageListLength) + 1;
                 generatePaginationList(startVal);
             }
 
@@ -106,14 +107,14 @@ myApp.controller('myController', ['$scope', '$http', function ($scope, $http) {
 
     var generatePaginationList = function (startVal) {
             var k = startVal;
-            for (i = 0; i < $scope.pageListLength; i++) {
+            for (var i = 0; i < $scope.pageListLength; i++) {
                 $scope.paginationList.push(k);
                 k++;
                 if (k > totalPages) {
                     break;
                 }
             }
-        }
+        };
         /*
         getPaginationList() & generatePaginationList() both are for generating the pagination list dynamically. generatePaginationList() is nested into the former one.
         generatePaginationList(startVal) will take the starting value of the array to be generated and, until conditions- that is not exceeds the paging list length value or total pages value, it will get incremented & pushed into array
